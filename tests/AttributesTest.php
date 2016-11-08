@@ -103,10 +103,12 @@ class AttributesTest extends \PHPUnit_Framework_TestCase {
     );
   }
 
-  public function attributeExpressions(): array<(string,string)> {
+  public function attributeExpressions(): array<(string,mixed)> {
     return array(
       tuple("'herp'.'derp'", 'herpderp'),
       tuple("Foo\\Bar::class", "Foo\\Bar"),
+      tuple("+123", 123),
+      tuple("-123", -123),
     );
   }
 
@@ -115,7 +117,7 @@ class AttributesTest extends \PHPUnit_Framework_TestCase {
    */
   public function testAttributeExpression(
     string $source,
-    string $expected,
+    mixed $expected,
   ): void {
     $data = '<?hh <<MyAttr('.$source.')>> function foo(){}';
     $parser = FileParser::FromData($data);
