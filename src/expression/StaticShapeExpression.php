@@ -2,6 +2,7 @@
 
 namespace FredEmmott\DefinitionFinder\Expression;
 
+use FredEmmott\DefinitionFinder\T_SHAPE;
 use FredEmmott\DefinitionFinder\TokenQueue;
 
 final class StaticShapeExpression extends Expression {
