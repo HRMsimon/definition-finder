@@ -2,6 +2,8 @@
 
 namespace FredEmmott\DefinitionFinder;
 
+use FredEmmott\DefinitionFinder\Expression\StaticScalarExpression;
+
 final class UserAttributesConsumer extends Consumer {
   public function getUserAttributes(): AttributeMap {
     $attrs = Map { };
@@ -35,39 +37,20 @@ final class UserAttributesConsumer extends Consumer {
       );
 
       // Possibly multiple values
-      $attr_value = null;
       while ($this->tq->haveTokens()) {
 
         $this->consumeWhitespace();
 
-        list($value, $ttype) = $this->tq->shift();
-        switch ((int) $ttype) {
-          case T_CONSTANT_ENCAPSED_STRING:
-            $attr_value .= substr($value, 1, -1);
-            break;
-          case T_LNUMBER:
-            if ($attr_value === null) {
-              $attr_value = (int) $value;
-            } else {
-              $attr_value .= $value;
-            }
-            break;
-          default:
-            invariant_violation(
-              "Invalid attribute value token type at line %d: %d",
-              $this->tq->getLine(),
-              $ttype
-            );
-        }
-        $this->consumeWhitespace();
-        list($t, $_) = $this->tq->shift();
-        if ($t === '.') {
-          $this->consumeWhitespace();
-          continue;
-        }
+        $expr = StaticScalarExpression::match($this->tq);
+        invariant(
+          $expr !== null,
+          "Invalid attribute value token type at line %d: %d",
+          $this->tq->getLine(),
+          $ttype
+        );
 
-        $attrs[$name][] = $attr_value;
-        $attr_value = null;
+        $attrs[$name][] = $expr->getValue();
+        list($t, $ttype) = $this->tq->shift();
 
         if ($t === ')') {
           break;
