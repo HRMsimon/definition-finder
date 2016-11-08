@@ -2,7 +2,6 @@
 
 namespace FredEmmott\DefinitionFinder\Expression;
 
-use FredEmmott\DefinitionFinder\ClassConsumer;
 use FredEmmott\DefinitionFinder\TokenQueue;
 
 final class StaticClassClassConstantExpression extends Expression {
