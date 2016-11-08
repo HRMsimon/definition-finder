@@ -2,13 +2,12 @@
 
 namespace FredEmmott\DefinitionFinder\Expression;
 
-use FredEmmott\DefinitionFinder\T_SHAPE;
 use FredEmmott\DefinitionFinder\TokenQueue;
 
 final class StaticShapeExpression extends Expression {
   protected static function matchImpl(TokenQueue $tq): ?Expression {
     list($t, $ttype) = $tq->shift();
-    if ($ttype !== T_SHAPE) {
+    if ($ttype !== \FredEmmott\DefinitionFinder\T_SHAPE) {
       return null;
     }
     list ($t, $ttype) = $tq->shift();
