@@ -52,8 +52,6 @@ final class TypeConstantConsumer extends Consumer {
   private function consumeValue(): ?ScannedTypehint {
     $this->consumeWhitespace();
 
-    $expectValue = false;
-
     list($next, $next_type) = $this->tq->peek();
     if($next === RelationshipToken::SUBTYPE) {
       invariant(
@@ -81,7 +79,7 @@ final class TypeConstantConsumer extends Consumer {
       ))->getTypehint();
     }
 
-      $this->consumeStatement();
-      return null;
+    $this->consumeStatement();
+    return null;
   }
 }

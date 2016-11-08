@@ -62,6 +62,7 @@ final class DefineConsumer extends Consumer {
       $this->getBuilderContext(),
       $value,
       /* typehint = */ null,
+      AbstractnessToken::NOT_ABSTRACT,
     );
   }
 }
