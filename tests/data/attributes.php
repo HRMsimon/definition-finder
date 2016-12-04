@@ -28,7 +28,14 @@ Foo,
 Bar
 (
     'herp',
-    'derp'
+    'derp',
 )
 >>
 class ClassWithFormattedAttributes {}
+
+<<
+Bar(
+  ['herp']
+)
+>>
+class ClassWithFormattedArrayAttribute {}
